@@ -1,5 +1,7 @@
-import * as express from "express";
 import * as dotenv from "dotenv";
+// Load configuration settings from the .env file in the same directory as this script
+dotenv.config();
+import * as express from "express";
 import * as compression from "compression";
 import * as bodyParser from "body-parser";
 import * as expressHandlebars from "express-handlebars";
@@ -10,9 +12,6 @@ const handlebars = expressHandlebars.create();
 
 // Let the process crash on unhandled promises
 process.on('unhandledRejection', err => { throw err; });
-
-// Load configuration settings from the .env file in the same directory as this script
-dotenv.config();
 
 const app = express();
 app.use(compression());
@@ -34,7 +33,7 @@ app.post("/event", (req, res, next) =>
 {
 	const event = req.body as EventPostRequest;
 
-	if (!event.type || !event.data)
+	if (typeof event.type === "undefined" || typeof event.data === "undefined")
 	{
 		res.status(422).send(`Request body must contain 'type' and 'data' properties`);
 		return;
@@ -43,7 +42,7 @@ app.post("/event", (req, res, next) =>
 	sql.doQuery<void>(`INSERT INTO Event(EventId,Type,Data) VALUES(?, ?, ?)`, [
 		utils.guid(),
 		event.type,
-		event.data,
+		JSON.stringify(event.data),
 	]);
 
 	res.status(201).send();
