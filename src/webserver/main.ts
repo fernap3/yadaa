@@ -32,7 +32,6 @@ app.use(express.static("src/webclient"));
 app.post("/event", (req, res, next) =>
 {
 	const event = req.body as EventPostRequest;
-
 	if (typeof event.type === "undefined" || typeof event.data === "undefined")
 	{
 		res.status(422).send(`Request body must contain 'type' and 'data' properties`);
@@ -53,30 +52,36 @@ app.listen(process.env.PORT || 8080, () => {
 	console.log(`Listening at port ${process.env.PORT}`);
 });
 
-type EventType = "GlucoseReading" | "Meal" | "Insulin" | "Note";
-type EventPostRequest = GlucoseReadingEventPostRequest | MealEventPostRequest | InsulinEventPostRequest | NoteEventPostRequest;
+type EventType = "glucose-reading" | "meal" | "bolus-insulin" | "basil-insulin" | "note";
+type EventPostRequest = GlucoseReadingEventPostRequest | MealEventPostRequest | BasilInsulinEventPostRequest | BolusInsulinEventPostRequest | NoteEventPostRequest;
 
 interface GlucoseReadingEventPostRequest
 {
-	type: "GlucoseReading";
+	type: "glucose-reading";
 	data: GlucoseReadingEventData;
 }
 
 interface MealEventPostRequest
 {
-	type: "Meal";
+	type: "meal";
 	data: MealEventData;
 }
 
-interface InsulinEventPostRequest
+interface BolusInsulinEventPostRequest
 {
-	type: "Insulin";
-	data: InsulinEventData;
+	type: "bolus-insulin";
+	data: BolusInsulinEventData;
+}
+
+interface BasilInsulinEventPostRequest
+{
+	type: "basil-insulin";
+	data: BasilInsulinEventData;
 }
 
 interface NoteEventPostRequest
 {
-	type: "Note";
+	type: "note";
 	data: NoteEventData;
 }
 
@@ -90,7 +95,12 @@ interface MealEventData
 	
 }
 
-interface InsulinEventData
+interface BolusInsulinEventData
+{
+	
+}
+
+interface BasilInsulinEventData
 {
 	
 }
