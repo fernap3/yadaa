@@ -1,7 +1,10 @@
 {
 	"compilerOptions": {
 		"module": "commonjs",
-		"target": "esnext"
+		"target": "esnext",
+		"strictNullChecks": true,
+		"noImplicitThis": true,
+		"noImplicitReturns": true
 	},
 	"exclude": [
 		"node_modules"
