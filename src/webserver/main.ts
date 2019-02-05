@@ -1,6 +1,7 @@
 import * as dotenv from "dotenv";
 // Load configuration settings from the .env file in the same directory as this script
 dotenv.config();
+import * as path from "path";
 import * as express from "express";
 import * as compression from "compression";
 import * as bodyParser from "body-parser";
@@ -26,6 +27,8 @@ app.get("/", async (req, res, next) =>
 	const html = await handlebars.render("src/webclient/index.handlebars", {});
 	res.send(html);
 });
+
+app.get("/service-worker.js", (req, res, next) => res.sendFile(path.resolve("src/webclient/service-worker.js")));
 
 app.use("/static", express.static("src/webclient"));
 

@@ -4,7 +4,8 @@
 		"target": "esnext",
 		"strictNullChecks": true,
 		"noImplicitThis": true,
-		"noImplicitReturns": true
+		"noImplicitReturns": true,
+		"lib": ["webworker", "dom", "esnext"]
 	},
 	"exclude": [
 		"node_modules"

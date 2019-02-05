@@ -28,6 +28,19 @@ class App
 		mealButton.onclick = () => {
 			this.postNewEvent("meal", { carbs: parseFloat(mealCarbsInput.value), description: mealDescriptionInput.value });
 		};
+
+		window.addEventListener('load', async () =>
+		{
+			try
+			{
+				const reg = await navigator.serviceWorker.register('/service-worker.js');
+				console.log("ServiceWorker registration successful with scope: ", reg.scope);
+			}
+			catch (e)
+			{
+				console.log("ServiceWorker registration failed: ", e);
+			}
+		});
 	}
 
 	private async postNewEvent(type: string, data: any)
