@@ -3,3 +3,4 @@ node_modules/
 dist/
 src/webclient/*.js
 src/webserver/*.js
+package-lock.json
