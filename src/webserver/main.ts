@@ -15,6 +15,18 @@ const handlebars = expressHandlebars.create();
 process.on('unhandledRejection', err => { throw err; });
 
 const app = express();
+
+if (app.settings.env === "production")
+{
+	// Redirect http to https in production only
+	app.use((req, res, next) => {
+		if (req.header("x-forwarded-proto") !== "https")
+			res.redirect(`https://${req.header("host")}${req.url}`);
+		else
+			next();
+	});
+}
+
 app.use(compression());
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
