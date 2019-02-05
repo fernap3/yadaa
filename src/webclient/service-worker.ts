@@ -15,15 +15,15 @@ self.addEventListener("install", evt =>
 	);
 });
 
-self.addEventListener("fetch", (evt: FetchEvent) => {
-	evt.respondWith(
-		caches.match(evt.request)
+self.addEventListener("fetch", evt => {
+	(<any>evt).respondWith(
+		caches.match((<any>evt).request)
 			.then(response => {
 				// Cache hit - return response
 				if (response) {
 					return response;
 				}
-				return fetch(evt.request);
+				return fetch((<any>evt).request);
 			})
 	);
 });
