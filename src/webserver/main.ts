@@ -27,7 +27,7 @@ app.get("/", async (req, res, next) =>
 	res.send(html);
 });
 
-app.use(express.static("src/webclient"));
+app.use("/static", express.static("src/webclient"));
 
 app.post("/event", (req, res, next) =>
 {
